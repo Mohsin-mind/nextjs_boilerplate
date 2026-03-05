@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js 16 Boilerplate
+
+A production-ready Next.js 16 boilerplate with authentication, database, state management, and a clean architecture.
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router, JavaScript) |
+| Styling | Tailwind CSS v4 + shadcn/ui |
+| Auth | Better Auth |
+| Database ORM | Prisma + PostgreSQL |
+| Client State | Redux Toolkit |
+| Server State | TanStack Query v5 |
+| Forms | React Hook Form + Zod |
+| Package Manager | pnpm |
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── (auth)/           # Login, Register pages (minimal layout)
+│   ├── (main)/           # Protected pages with Navbar + Footer
+│   ├── api/auth/         # Better Auth API handler
+│   ├── layout.js         # Root layout with Providers
+│   └── page.js           # Root redirect
+├── components/
+│   ├── ui/               # shadcn/ui components
+│   ├── layout/           # Navbar, Footer
+│   ├── auth/             # LoginForm, RegisterForm
+│   └── common/           # LoadingSpinner, etc.
+├── config/               # Environment-based config objects
+├── constants/            # Routes, messages, app constants
+├── hooks/                # useAuth, useMediaQuery, useToast
+├── lib/                  # Singletons: prisma, auth, api, utils, helpers
+├── providers/            # Redux + TanStack Query providers
+├── services/
+│   ├── api/              # Raw API functions (no React)
+│   └── queries/          # TanStack Query hooks + key factories
+├── store/                # Redux store + slices
+├── types/                # JSDoc type definitions
+├── validations/          # Zod schemas
+└── middleware.js         # Route protection
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone and install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set up environment variables
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit `.env.local` with your values:
 
-## Learn More
+```bash
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL=postgresql://user:password@localhost:5432/mydb
+BETTER_AUTH_SECRET=your-secret-key-min-32-chars
+BETTER_AUTH_URL=http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Set up the database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm db:generate   # Generate Prisma client
+pnpm db:migrate    # Run migrations
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run the development server
 
-## Deploy on Vercel
+```bash
+pnpm dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Open [http://localhost:3000](http://localhost:3000).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Key Patterns
+
+### Adding a new API resource
+
+1. Create `src/services/api/post.api.js` — plain async functions using `api.get()`, `api.post()` etc.
+2. Create `src/services/queries/post.queries.js` — TanStack Query hooks + key factory
+3. Components import from `queries/` only
+
+### Adding a new page
+
+- **Protected page**: Add to `src/app/(main)/your-page/page.js`
+- **Public page**: Add to `src/app/(auth)/your-page/page.js` and add route to `PUBLIC_ROUTES` in `src/constants/routes.js`
+
+### Adding a new Redux slice
+
+1. Create `src/store/slices/yourSlice.js`
+2. Add reducer to `src/store/index.js`
+
+### Adding a new Zod schema
+
+- Reuse field schemas from `src/validations/common.schema.js`
+- Create domain-specific schemas in `src/validations/your-domain.schema.js`
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm start` | Start production server |
+| `pnpm lint` | Run ESLint |
+| `pnpm db:generate` | Generate Prisma client |
+| `pnpm db:migrate` | Run database migrations |
+| `pnpm db:push` | Push schema changes (no migration) |
+| `pnpm db:studio` | Open Prisma Studio |
