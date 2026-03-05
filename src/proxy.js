@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 import { AUTH_ROUTES, PUBLIC_ROUTES, DEFAULT_LOGIN_REDIRECT, ROUTES } from '@/constants/routes';
 
-export function middleware(request) {
+export function proxy(request) {
   const { pathname } = request.nextUrl;
   const sessionCookie = getSessionCookie(request);
 

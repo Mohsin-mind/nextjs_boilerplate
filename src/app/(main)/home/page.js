@@ -11,11 +11,8 @@ export default async function HomePage() {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
 
-  // Parse name into firstName/lastName if stored as full name
-  const displayName = user?.name || '';
-  const nameParts = displayName.split(' ');
-  const firstName = nameParts[0] || '';
-  const _lastName = nameParts.slice(1).join(' ') || '';
+  const firstName = user?.firstName || '';
+  const _lastName = user?.lastName || '';
 
   return (
     <div className="space-y-6">

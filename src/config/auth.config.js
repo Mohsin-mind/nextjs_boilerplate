@@ -10,6 +10,12 @@ export const authConfig = {
     enabled: true,
     minPasswordLength: 8,
   },
+  user: {
+    additionalFields: {
+      firstName: { type: 'string', required: false },
+      lastName: { type: 'string', required: false },
+    },
+  },
   // Uncomment to add OAuth providers:
   // socialProviders: {
   //   google: {

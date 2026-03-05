@@ -7,7 +7,9 @@
 /**
  * @typedef {Object} User
  * @property {string} id
- * @property {string} name
+ * @property {string|null} name
+ * @property {string|null} firstName
+ * @property {string|null} lastName
  * @property {string} email
  * @property {boolean} emailVerified
  * @property {string|null} image

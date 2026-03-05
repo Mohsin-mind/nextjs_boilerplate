@@ -35,18 +35,15 @@ export function capitalize(str) {
 }
 
 /**
- * Generate initials from a full name (e.g. "John Doe" → "JD").
- * @param {string} name
+ * Generate initials from first and last name (e.g. "John", "Doe" → "JD").
+ * @param {string} firstName
+ * @param {string} lastName
  * @returns {string}
  */
-export function getInitials(name) {
-  if (!name) return '';
-  return name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
+export function getInitials(firstName, lastName) {
+  const f = (firstName || '').charAt(0);
+  const l = (lastName || '').charAt(0);
+  return (f + l).toUpperCase() || '?';
 }
 
 /**

@@ -38,6 +38,8 @@ export function useAuth() {
   async function register({ firstName, lastName, email, password }) {
     const result = await signUp.email({
       name: `${firstName} ${lastName}`.trim(),
+      firstName,
+      lastName,
       email,
       password,
     });

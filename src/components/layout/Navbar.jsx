@@ -27,7 +27,9 @@ export function Navbar() {
             <LoadingSpinner size="sm" />
           ) : isAuthenticated ? (
             <>
-              <span className="text-sm text-muted-foreground hidden sm:block">{user?.name}</span>
+              <span className="text-sm text-muted-foreground hidden sm:block">
+                {[user?.firstName, user?.lastName].filter(Boolean).join(' ')}
+              </span>
               <Button variant="outline" size="sm" onClick={logout}>
                 Sign out
               </Button>
