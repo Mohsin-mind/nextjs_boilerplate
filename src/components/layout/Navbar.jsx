@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { ROUTES } from "@/constants/routes";
-import { APP_NAME } from "@/constants/app";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import Link from 'next/link';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/constants/routes';
+import { APP_NAME } from '@/constants/app';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
 export function Navbar() {
   const { user, isLoading, isAuthenticated, logout } = useAuth();
@@ -27,9 +27,7 @@ export function Navbar() {
             <LoadingSpinner size="sm" />
           ) : isAuthenticated ? (
             <>
-              <span className="text-sm text-muted-foreground hidden sm:block">
-                {user?.name}
-              </span>
+              <span className="text-sm text-muted-foreground hidden sm:block">{user?.name}</span>
               <Button variant="outline" size="sm" onClick={logout}>
                 Sign out
               </Button>

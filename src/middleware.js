@@ -1,11 +1,6 @@
-import { NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
-import {
-  AUTH_ROUTES,
-  PUBLIC_ROUTES,
-  DEFAULT_LOGIN_REDIRECT,
-  ROUTES,
-} from "@/constants/routes";
+import { NextResponse } from 'next/server';
+import { getSessionCookie } from 'better-auth/cookies';
+import { AUTH_ROUTES, PUBLIC_ROUTES, DEFAULT_LOGIN_REDIRECT, ROUTES } from '@/constants/routes';
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -14,9 +9,7 @@ export function middleware(request) {
   // Redirect authenticated users away from auth pages (login, register)
   if (AUTH_ROUTES.some((route) => pathname.startsWith(route))) {
     if (sessionCookie) {
-      return NextResponse.redirect(
-        new URL(DEFAULT_LOGIN_REDIRECT, request.url)
-      );
+      return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.url));
     }
     return NextResponse.next();
   }
@@ -41,6 +34,6 @@ export const config = {
      * - favicon.ico
      * - public folder files
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
   ],
 };

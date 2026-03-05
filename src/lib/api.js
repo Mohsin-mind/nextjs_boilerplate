@@ -1,4 +1,3 @@
-
 /**
  * Base fetch wrapper — all API calls go through this.
  * Handles base URL, JSON parsing, and standardised error throwing.
@@ -12,7 +11,7 @@ async function apiFetch(endpoint, options = {}) {
   const config = {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   };
@@ -20,9 +19,7 @@ async function apiFetch(endpoint, options = {}) {
   const response = await fetch(url, config);
 
   if (!response.ok) {
-    const error = await response
-      .json()
-      .catch(() => ({ message: response.statusText }));
+    const error = await response.json().catch(() => ({ message: response.statusText }));
     throw new Error(error.message || `HTTP ${response.status}`);
   }
 
@@ -37,8 +34,7 @@ export const api = {
    * @param {string} endpoint
    * @param {RequestInit} [options]
    */
-  get: (endpoint, options) =>
-    apiFetch(endpoint, { method: "GET", ...options }),
+  get: (endpoint, options) => apiFetch(endpoint, { method: 'GET', ...options }),
 
   /**
    * @param {string} endpoint
@@ -47,7 +43,7 @@ export const api = {
    */
   post: (endpoint, body, options) =>
     apiFetch(endpoint, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(body),
       ...options,
     }),
@@ -59,7 +55,7 @@ export const api = {
    */
   put: (endpoint, body, options) =>
     apiFetch(endpoint, {
-      method: "PUT",
+      method: 'PUT',
       body: JSON.stringify(body),
       ...options,
     }),
@@ -71,7 +67,7 @@ export const api = {
    */
   patch: (endpoint, body, options) =>
     apiFetch(endpoint, {
-      method: "PATCH",
+      method: 'PATCH',
       body: JSON.stringify(body),
       ...options,
     }),
@@ -80,6 +76,5 @@ export const api = {
    * @param {string} endpoint
    * @param {RequestInit} [options]
    */
-  delete: (endpoint, options) =>
-    apiFetch(endpoint, { method: "DELETE", ...options }),
+  delete: (endpoint, options) => apiFetch(endpoint, { method: 'DELETE', ...options }),
 };

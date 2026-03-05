@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { emailSchema, passwordSchema, nameSchema } from "./common.schema";
+import { z } from 'zod';
+import { emailSchema, passwordSchema, nameSchema } from './common.schema';
 
 export const loginSchema = z.object({
   email: emailSchema,
@@ -15,6 +15,6 @@ export const registerSchema = z
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
   });

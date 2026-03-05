@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useState } from "react";
-import { registerSchema } from "@/validations/auth.schema";
-import { useAuth } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useState } from 'react';
+import { registerSchema } from '@/validations/auth.schema';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -16,12 +16,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { ROUTES } from "@/constants/routes";
+} from '@/components/ui/card';
+import { ROUTES } from '@/constants/routes';
 
 export function RegisterForm() {
   const { register: registerUser } = useAuth();
-  const [serverError, setServerError] = useState("");
+  const [serverError, setServerError] = useState('');
 
   const {
     register,
@@ -32,7 +32,7 @@ export function RegisterForm() {
   });
 
   async function onSubmit(data) {
-    setServerError("");
+    setServerError('');
     const result = await registerUser({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -48,17 +48,13 @@ export function RegisterForm() {
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Create account</CardTitle>
-        <CardDescription>
-          Enter your details to create a new account.
-        </CardDescription>
+        <CardDescription>Enter your details to create a new account.</CardDescription>
       </CardHeader>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           {/* Server error */}
-          {serverError && (
-            <p className="text-sm text-destructive">{serverError}</p>
-          )}
+          {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
           {/* First Name */}
           <div className="space-y-1">
@@ -68,7 +64,7 @@ export function RegisterForm() {
               type="text"
               placeholder="John"
               autoComplete="given-name"
-              {...register("firstName")}
+              {...register('firstName')}
             />
             {errors.firstName && (
               <p className="text-xs text-destructive">{errors.firstName.message}</p>
@@ -83,7 +79,7 @@ export function RegisterForm() {
               type="text"
               placeholder="Doe"
               autoComplete="family-name"
-              {...register("lastName")}
+              {...register('lastName')}
             />
             {errors.lastName && (
               <p className="text-xs text-destructive">{errors.lastName.message}</p>
@@ -98,11 +94,9 @@ export function RegisterForm() {
               type="email"
               placeholder="you@example.com"
               autoComplete="email"
-              {...register("email")}
+              {...register('email')}
             />
-            {errors.email && (
-              <p className="text-xs text-destructive">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
@@ -113,12 +107,10 @@ export function RegisterForm() {
               type="password"
               placeholder="••••••••"
               autoComplete="new-password"
-              {...register("password")}
+              {...register('password')}
             />
             {errors.password && (
-              <p className="text-xs text-destructive">
-                {errors.password.message}
-              </p>
+              <p className="text-xs text-destructive">{errors.password.message}</p>
             )}
           </div>
 
@@ -130,26 +122,21 @@ export function RegisterForm() {
               type="password"
               placeholder="••••••••"
               autoComplete="new-password"
-              {...register("confirmPassword")}
+              {...register('confirmPassword')}
             />
             {errors.confirmPassword && (
-              <p className="text-xs text-destructive">
-                {errors.confirmPassword.message}
-              </p>
+              <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>
             )}
           </div>
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3">
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Creating account..." : "Create account"}
+            {isSubmitting ? 'Creating account...' : 'Create account'}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
-            Already have an account?{" "}
-            <Link
-              href={ROUTES.LOGIN}
-              className="text-primary underline-offset-4 hover:underline"
-            >
+            Already have an account?{' '}
+            <Link href={ROUTES.LOGIN} className="text-primary underline-offset-4 hover:underline">
               Sign in
             </Link>
           </p>

@@ -4,16 +4,16 @@ A production-ready Next.js 16 boilerplate with authentication, database, state m
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router, JavaScript) |
-| Styling | Tailwind CSS v4 + shadcn/ui |
-| Auth | Better Auth |
-| Database ORM | Prisma + PostgreSQL |
-| Client State | Redux Toolkit |
-| Server State | TanStack Query v5 |
-| Forms | React Hook Form + Zod |
-| Package Manager | pnpm |
+| Layer           | Technology                          |
+| --------------- | ----------------------------------- |
+| Framework       | Next.js 16 (App Router, JavaScript) |
+| Styling         | Tailwind CSS v4 + shadcn/ui         |
+| Auth            | Better Auth                         |
+| Database ORM    | Prisma + PostgreSQL                 |
+| Client State    | Redux Toolkit                       |
+| Server State    | TanStack Query v5                   |
+| Forms           | React Hook Form + Zod               |
+| Package Manager | pnpm                                |
 
 ## Project Structure
 
@@ -107,13 +107,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint |
-| `pnpm db:generate` | Generate Prisma client |
-| `pnpm db:migrate` | Run database migrations |
-| `pnpm db:push` | Push schema changes (no migration) |
-| `pnpm db:studio` | Open Prisma Studio |
+| Command            | Description                        |
+| ------------------ | ---------------------------------- |
+| `pnpm dev`         | Start development server           |
+| `pnpm build`       | Build for production               |
+| `pnpm start`       | Start production server            |
+| `pnpm lint`        | Run ESLint                         |
+| `pnpm db:generate` | Generate Prisma client             |
+| `pnpm db:migrate`  | Run database migrations            |
+| `pnpm db:push`     | Push schema changes (no migration) |
+| `pnpm db:studio`   | Open Prisma Studio                 |

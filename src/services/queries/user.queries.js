@@ -1,10 +1,10 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCurrentUser, updateUserProfile } from "@/services/api/user.api";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getCurrentUser, updateUserProfile } from '@/services/api/user.api';
 
 // Query key factory — centralised, prevents typos and enables targeted invalidation
 export const userKeys = {
-  all: ["users"],
-  me: () => [...userKeys.all, "me"],
+  all: ['users'],
+  me: () => [...userKeys.all, 'me'],
 };
 
 /**

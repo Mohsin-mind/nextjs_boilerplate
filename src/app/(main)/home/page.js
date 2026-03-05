@@ -1,10 +1,10 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { APP_NAME } from "@/constants/app";
-import { formatDate } from "@/lib/helpers";
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import { APP_NAME } from '@/constants/app';
+import { formatDate } from '@/lib/helpers';
 
 export const metadata = {
-  title: "Home",
+  title: 'Home',
 };
 
 export default async function HomePage() {
@@ -12,20 +12,19 @@ export default async function HomePage() {
   const user = session?.user;
 
   // Parse name into firstName/lastName if stored as full name
-  const displayName = user?.name || "";
-  const nameParts = displayName.split(" ");
-  const firstName = nameParts[0] || "";
-  const lastName = nameParts.slice(1).join(" ") || "";
+  const displayName = user?.name || '';
+  const nameParts = displayName.split(' ');
+  const firstName = nameParts[0] || '';
+  const _lastName = nameParts.slice(1).join(' ') || '';
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back{firstName ? `, ${firstName}` : ""}!
+          Welcome back{firstName ? `, ${firstName}` : ''}
         </h1>
         <p className="text-muted-foreground mt-1">
-          You're signed in as{" "}
-          <span className="font-medium">{user?.email}</span>
+          You&apos;re signed in as <span className="font-medium">{user?.email}</span>
         </p>
       </div>
 
@@ -41,8 +40,7 @@ export default async function HomePage() {
         <div className="rounded-xl border bg-card p-6 shadow-sm">
           <h2 className="font-semibold">Account</h2>
           <p className="text-sm text-muted-foreground mt-2">
-            Member since{" "}
-            {user?.createdAt ? formatDate(user.createdAt) : "today"}.
+            Member since {user?.createdAt ? formatDate(user.createdAt) : 'today'}.
           </p>
         </div>
 

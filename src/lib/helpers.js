@@ -5,10 +5,10 @@
  * @returns {string}
  */
 export function formatDate(date, options = {}) {
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
     ...options,
   }).format(new Date(date));
 }
@@ -30,7 +30,7 @@ export function truncate(str, maxLength = 100) {
  * @returns {string}
  */
 export function capitalize(str) {
-  if (!str) return "";
+  if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
@@ -40,11 +40,11 @@ export function capitalize(str) {
  * @returns {string}
  */
 export function getInitials(name) {
-  if (!name) return "";
+  if (!name) return '';
   return name
-    .split(" ")
+    .split(' ')
     .map((part) => part[0])
-    .join("")
+    .join('')
     .toUpperCase()
     .slice(0, 2);
 }
@@ -79,10 +79,10 @@ export function safeJsonParse(str) {
 export function buildQueryString(params) {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== null && value !== undefined && value !== "") {
+    if (value !== null && value !== undefined && value !== '') {
       searchParams.set(key, String(value));
     }
   });
   const qs = searchParams.toString();
-  return qs ? `?${qs}` : "";
+  return qs ? `?${qs}` : '';
 }

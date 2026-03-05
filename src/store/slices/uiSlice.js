@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { THEME } from "@/constants/app";
+import { createSlice } from '@reduxjs/toolkit';
+import { THEME } from '@/constants/app';
 
 const initialState = {
   sidebarOpen: false,
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState,
   reducers: {
     toggleSidebar: (state) => {
@@ -29,7 +29,6 @@ const uiSlice = createSlice({
   },
 });
 
-export const { toggleSidebar, setSidebarOpen, setTheme, openModal, closeModal } =
-  uiSlice.actions;
+export const { toggleSidebar, setSidebarOpen, setTheme, openModal, closeModal } = uiSlice.actions;
 
 export default uiSlice.reducer;

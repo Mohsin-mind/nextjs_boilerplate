@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useSession, signIn, signOut, signUp } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "@/constants/routes";
-import { AUTH_MESSAGES } from "@/constants/messages";
+import { useSession, signIn, signOut, signUp } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/constants/routes';
+import { AUTH_MESSAGES } from '@/constants/messages';
 
 /**
  * Auth state hook — wraps Better Auth client with app-specific helpers.

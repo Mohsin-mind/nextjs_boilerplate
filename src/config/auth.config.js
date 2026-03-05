@@ -1,4 +1,4 @@
-import { SESSION } from "@/constants/app";
+import { SESSION } from '@/constants/app';
 
 // Centralised auth config — consumed by Better Auth server (src/lib/auth.js)
 export const authConfig = {

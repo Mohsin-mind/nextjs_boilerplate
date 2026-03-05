@@ -2,16 +2,16 @@
 
 ## Stack Summary
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router, JavaScript) |
-| Styling | Tailwind CSS v4 + shadcn/ui |
-| Auth | Better Auth |
-| Database ORM | Prisma + PostgreSQL |
-| Client State | Redux Toolkit |
-| Server State | TanStack Query (React Query v5) |
-| Forms | React Hook Form + Zod |
-| Package Manager | pnpm |
+| Layer           | Technology                          |
+| --------------- | ----------------------------------- |
+| Framework       | Next.js 16 (App Router, JavaScript) |
+| Styling         | Tailwind CSS v4 + shadcn/ui         |
+| Auth            | Better Auth                         |
+| Database ORM    | Prisma + PostgreSQL                 |
+| Client State    | Redux Toolkit                       |
+| Server State    | TanStack Query (React Query v5)     |
+| Forms           | React Hook Form + Zod               |
+| Package Manager | pnpm                                |
 
 ---
 
@@ -251,14 +251,14 @@ model Verification {
 ### `src/lib/auth.js` — Better Auth Server
 
 ```js
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { prisma } from "@/lib/prisma";
-import { authConfig } from "@/config/auth.config";
+import { betterAuth } from 'better-auth';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { prisma } from '@/lib/prisma';
+import { authConfig } from '@/config/auth.config';
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
-    provider: "postgresql",
+    provider: 'postgresql',
   }),
   ...authConfig,
 });
@@ -267,7 +267,7 @@ export const auth = betterAuth({
 ### `src/lib/auth-client.js` — Better Auth Browser Client
 
 ```js
-import { createAuthClient } from "better-auth/react";
+import { createAuthClient } from 'better-auth/react';
 
 export const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
@@ -279,14 +279,13 @@ export const { signIn, signUp, signOut, useSession } = authClient;
 ### `src/lib/prisma.js` — Prisma Singleton
 
 ```js
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = globalThis;
 
-export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient();
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 ```
@@ -294,8 +293,8 @@ if (process.env.NODE_ENV !== "production") {
 ### `src/lib/utils.js` — Utility Functions
 
 ```js
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -305,8 +304,8 @@ export function cn(...inputs) {
 ### `src/app/api/auth/[...all]/route.js` — Better Auth API Handler
 
 ```js
-import { auth } from "@/lib/auth";
-import { toNextJsHandler } from "better-auth/next-js";
+import { auth } from '@/lib/auth';
+import { toNextJsHandler } from 'better-auth/next-js';
 
 export const { GET, POST } = toNextJsHandler(auth);
 ```
@@ -317,16 +316,16 @@ export const { GET, POST } = toNextJsHandler(auth);
 // All app route paths as constants — import these everywhere instead of hardcoding strings
 export const ROUTES = {
   // Public
-  HOME: "/",
-  LOGIN: "/login",
-  REGISTER: "/register",
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
 
   // Protected
-  DASHBOARD: "/dashboard",
-  APP_HOME: "/home",
+  DASHBOARD: '/dashboard',
+  APP_HOME: '/home',
 
   // API
-  AUTH_API: "/api/auth",
+  AUTH_API: '/api/auth',
 };
 
 // Routes that do NOT require authentication
@@ -344,25 +343,25 @@ export const DEFAULT_LOGIN_REDIRECT = ROUTES.APP_HOME;
 ```js
 // Centralised UI strings — avoids magic strings scattered across components
 export const AUTH_MESSAGES = {
-  LOGIN_SUCCESS: "Welcome back!",
-  LOGIN_ERROR: "Invalid email or password.",
-  REGISTER_SUCCESS: "Account created successfully.",
-  REGISTER_ERROR: "Failed to create account. Please try again.",
-  LOGOUT_SUCCESS: "You have been logged out.",
-  SESSION_EXPIRED: "Your session has expired. Please log in again.",
+  LOGIN_SUCCESS: 'Welcome back!',
+  LOGIN_ERROR: 'Invalid email or password.',
+  REGISTER_SUCCESS: 'Account created successfully.',
+  REGISTER_ERROR: 'Failed to create account. Please try again.',
+  LOGOUT_SUCCESS: 'You have been logged out.',
+  SESSION_EXPIRED: 'Your session has expired. Please log in again.',
 };
 
 export const FORM_MESSAGES = {
-  REQUIRED: "This field is required.",
-  INVALID_EMAIL: "Please enter a valid email address.",
-  PASSWORD_MIN: "Password must be at least 8 characters.",
-  PASSWORDS_MISMATCH: "Passwords do not match.",
+  REQUIRED: 'This field is required.',
+  INVALID_EMAIL: 'Please enter a valid email address.',
+  PASSWORD_MIN: 'Password must be at least 8 characters.',
+  PASSWORDS_MISMATCH: 'Passwords do not match.',
 };
 
 export const GENERAL_MESSAGES = {
-  LOADING: "Loading...",
-  ERROR_GENERIC: "Something went wrong. Please try again.",
-  NOT_FOUND: "The page you are looking for does not exist.",
+  LOADING: 'Loading...',
+  ERROR_GENERIC: 'Something went wrong. Please try again.',
+  NOT_FOUND: 'The page you are looking for does not exist.',
 };
 ```
 
@@ -370,8 +369,8 @@ export const GENERAL_MESSAGES = {
 
 ```js
 // App-wide constants — pagination limits, feature flags, etc.
-export const APP_NAME = "My App";
-export const APP_DESCRIPTION = "Next.js 16 Boilerplate";
+export const APP_NAME = 'My App';
+export const APP_DESCRIPTION = 'Next.js 16 Boilerplate';
 
 export const PAGINATION = {
   DEFAULT_PAGE_SIZE: 10,
@@ -380,13 +379,13 @@ export const PAGINATION = {
 
 export const SESSION = {
   EXPIRES_IN_SECONDS: 60 * 60 * 24 * 7, // 7 days
-  UPDATE_AGE_SECONDS: 60 * 60 * 24,      // 1 day
+  UPDATE_AGE_SECONDS: 60 * 60 * 24, // 1 day
 };
 
 export const THEME = {
-  LIGHT: "light",
-  DARK: "dark",
-  SYSTEM: "system",
+  LIGHT: 'light',
+  DARK: 'dark',
+  SYSTEM: 'system',
 };
 ```
 
@@ -395,18 +394,18 @@ export const THEME = {
 ```js
 // Reads from environment variables — single source of truth for runtime config
 export const appConfig = {
-  name: process.env.NEXT_PUBLIC_APP_NAME || "My App",
-  url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || "Next.js 16 Boilerplate",
-  isDev: process.env.NODE_ENV === "development",
-  isProd: process.env.NODE_ENV === "production",
+  name: process.env.NEXT_PUBLIC_APP_NAME || 'My App',
+  url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+  description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || 'Next.js 16 Boilerplate',
+  isDev: process.env.NODE_ENV === 'development',
+  isProd: process.env.NODE_ENV === 'production',
 };
 ```
 
 ### `src/config/auth.config.js` — Auth Configuration
 
 ```js
-import { SESSION } from "@/constants/app";
+import { SESSION } from '@/constants/app';
 
 // Centralised auth config — consumed by both Better Auth server and middleware
 export const authConfig = {
@@ -430,8 +429,8 @@ export const authConfig = {
 export const queryConfig = {
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,        // 1 minute — data considered fresh
-      gcTime: 5 * 60 * 1000,       // 5 minutes — cache garbage collection
+      staleTime: 60 * 1000, // 1 minute — data considered fresh
+      gcTime: 5 * 60 * 1000, // 5 minutes — cache garbage collection
       retry: 1,
       refetchOnWindowFocus: false,
       refetchOnReconnect: true,
@@ -446,9 +445,9 @@ export const queryConfig = {
 ### `src/middleware.js` — Route Protection
 
 ```js
-import { NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
-import { AUTH_ROUTES, PUBLIC_ROUTES, DEFAULT_LOGIN_REDIRECT, ROUTES } from "@/constants/routes";
+import { NextResponse } from 'next/server';
+import { getSessionCookie } from 'better-auth/cookies';
+import { AUTH_ROUTES, PUBLIC_ROUTES, DEFAULT_LOGIN_REDIRECT, ROUTES } from '@/constants/routes';
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -473,16 +472,16 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|public).*)"],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|public).*)'],
 };
 ```
 
 ### `src/store/index.js` — Redux Store
 
 ```js
-import { configureStore } from "@reduxjs/toolkit";
-import uiReducer from "./slices/uiSlice";
-import userReducer from "./slices/userSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import uiReducer from './slices/uiSlice';
+import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {
@@ -501,16 +500,16 @@ export const store = configureStore({
 ### `src/store/slices/uiSlice.js`
 
 ```js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   sidebarOpen: false,
-  theme: "system",
+  theme: 'system',
   activeModal: null,
 };
 
 const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState,
   reducers: {
     toggleSidebar: (state) => {
@@ -535,17 +534,15 @@ export default uiSlice.reducer;
 ### `src/providers/index.jsx` — Combined Providers
 
 ```jsx
-"use client";
+'use client';
 
-import { ReduxProvider } from "./ReduxProvider";
-import { QueryProvider } from "./QueryProvider";
+import { ReduxProvider } from './ReduxProvider';
+import { QueryProvider } from './QueryProvider';
 
 export function Providers({ children }) {
   return (
     <ReduxProvider>
-      <QueryProvider>
-        {children}
-      </QueryProvider>
+      <QueryProvider>{children}</QueryProvider>
     </ReduxProvider>
   );
 }
@@ -554,25 +551,21 @@ export function Providers({ children }) {
 ### `src/providers/QueryProvider.jsx`
 
 ```jsx
-"use client";
+'use client';
 
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/lib/query-client";
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/lib/query-client';
 
 export function QueryProvider({ children }) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 ```
 
 ### `src/lib/query-client.js`
 
 ```js
-import { QueryClient } from "@tanstack/react-query";
-import { queryConfig } from "@/config/query.config";
+import { QueryClient } from '@tanstack/react-query';
+import { queryConfig } from '@/config/query.config';
 
 export const queryClient = new QueryClient(queryConfig);
 ```
@@ -582,7 +575,7 @@ export const queryClient = new QueryClient(queryConfig);
 This is the **single HTTP client** used by all `services/api/*.js` files. It handles base URL, JSON parsing, and standardised error throwing — so no component ever calls `fetch()` directly.
 
 ```js
-import { appConfig } from "@/config/app.config";
+import { appConfig } from '@/config/app.config';
 
 /**
  * Base fetch wrapper — all API calls go through this.
@@ -596,7 +589,7 @@ async function apiFetch(endpoint, options = {}) {
   const config = {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...options.headers,
     },
   };
@@ -614,20 +607,18 @@ async function apiFetch(endpoint, options = {}) {
 }
 
 export const api = {
-  get: (endpoint, options) =>
-    apiFetch(endpoint, { method: "GET", ...options }),
+  get: (endpoint, options) => apiFetch(endpoint, { method: 'GET', ...options }),
 
   post: (endpoint, body, options) =>
-    apiFetch(endpoint, { method: "POST", body: JSON.stringify(body), ...options }),
+    apiFetch(endpoint, { method: 'POST', body: JSON.stringify(body), ...options }),
 
   put: (endpoint, body, options) =>
-    apiFetch(endpoint, { method: "PUT", body: JSON.stringify(body), ...options }),
+    apiFetch(endpoint, { method: 'PUT', body: JSON.stringify(body), ...options }),
 
   patch: (endpoint, body, options) =>
-    apiFetch(endpoint, { method: "PATCH", body: JSON.stringify(body), ...options }),
+    apiFetch(endpoint, { method: 'PATCH', body: JSON.stringify(body), ...options }),
 
-  delete: (endpoint, options) =>
-    apiFetch(endpoint, { method: "DELETE", ...options }),
+  delete: (endpoint, options) => apiFetch(endpoint, { method: 'DELETE', ...options }),
 };
 ```
 
@@ -643,10 +634,10 @@ Pure utility functions reused across the app. Unlike `utils.js` (UI-focused with
  * @returns {string}
  */
 export function formatDate(date, options = {}) {
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
     ...options,
   }).format(new Date(date));
 }
@@ -668,7 +659,7 @@ export function truncate(str, maxLength = 100) {
  * @returns {string}
  */
 export function capitalize(str) {
-  if (!str) return "";
+  if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
@@ -678,11 +669,11 @@ export function capitalize(str) {
  * @returns {string}
  */
 export function getInitials(name) {
-  if (!name) return "";
+  if (!name) return '';
   return name
-    .split(" ")
+    .split(' ')
     .map((part) => part[0])
-    .join("")
+    .join('')
     .toUpperCase()
     .slice(0, 2);
 }
@@ -715,14 +706,14 @@ export function safeJsonParse(str) {
 These are **plain async functions** — no React, no hooks. They use `lib/api.js` and are called by TanStack Query hooks.
 
 ```js
-import { api } from "@/lib/api";
+import { api } from '@/lib/api';
 
 /**
  * Fetch the current authenticated user's profile.
  * @returns {Promise<import("@/types").User>}
  */
 export async function getCurrentUser() {
-  return api.get("/api/users/me");
+  return api.get('/api/users/me');
 }
 
 /**
@@ -731,7 +722,7 @@ export async function getCurrentUser() {
  * @returns {Promise<import("@/types").User>}
  */
 export async function updateUserProfile(data) {
-  return api.patch("/api/users/me", data);
+  return api.patch('/api/users/me', data);
 }
 ```
 
@@ -740,13 +731,13 @@ export async function updateUserProfile(data) {
 These are the **React hooks** that wrap TanStack Query around the raw API functions. Components import these — never the raw API functions directly.
 
 ```js
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCurrentUser, updateUserProfile } from "@/services/api/user.api";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getCurrentUser, updateUserProfile } from '@/services/api/user.api';
 
 // Query key factory — centralised, prevents typos and enables targeted invalidation
 export const userKeys = {
-  all: ["users"],
-  me: () => [...userKeys.all, "me"],
+  all: ['users'],
+  me: () => [...userKeys.all, 'me'],
 };
 
 /**
@@ -820,20 +811,17 @@ Since this is a JavaScript project, JSDoc `@typedef` provides IDE autocomplete a
 Wraps shadcn's `useToast` with pre-configured success/error/info helpers so components don't repeat toast config.
 
 ```js
-import { useToast as useShadcnToast } from "@/components/ui/use-toast";
+import { useToast as useShadcnToast } from '@/components/ui/use-toast';
 
 export function useToast() {
   const { toast } = useShadcnToast();
 
   return {
-    success: (message, description) =>
-      toast({ title: message, description, variant: "default" }),
+    success: (message, description) => toast({ title: message, description, variant: 'default' }),
 
-    error: (message, description) =>
-      toast({ title: message, description, variant: "destructive" }),
+    error: (message, description) => toast({ title: message, description, variant: 'destructive' }),
 
-    info: (message, description) =>
-      toast({ title: message, description }),
+    info: (message, description) => toast({ title: message, description }),
   };
 }
 ```
@@ -841,65 +829,70 @@ export function useToast() {
 ### `src/validations/common.schema.js` — Shared Zod Schemas
 
 ```js
-import { z } from "zod";
-import { PAGINATION } from "@/constants/app";
+import { z } from 'zod';
+import { PAGINATION } from '@/constants/app';
 
 // Reusable field schemas — compose these into larger schemas
-export const emailSchema = z.string().email("Invalid email address");
-export const passwordSchema = z.string().min(8, "Password must be at least 8 characters");
-export const nameSchema = z.string().min(2, "Name must be at least 2 characters").max(100);
-export const idSchema = z.string().cuid("Invalid ID format");
+export const emailSchema = z.string().email('Invalid email address');
+export const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
+export const nameSchema = z.string().min(2, 'Name must be at least 2 characters').max(100);
+export const idSchema = z.string().cuid('Invalid ID format');
 
 // Reusable pagination schema
 export const paginationSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
-  pageSize: z.coerce.number().int().min(1).max(PAGINATION.MAX_PAGE_SIZE).default(PAGINATION.DEFAULT_PAGE_SIZE),
+  pageSize: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(PAGINATION.MAX_PAGE_SIZE)
+    .default(PAGINATION.DEFAULT_PAGE_SIZE),
 });
 ```
 
 ### `src/validations/auth.schema.js` — Zod Schemas
 
 ```js
-import { z } from "zod";
+import { z } from 'zod';
 
 export const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
-export const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+export const registerSchema = z
+  .object({
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 ```
 
 ### `src/app/layout.js` — Root Layout
 
 ```jsx
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Providers } from "@/providers";
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/providers';
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
+const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
 
 export const metadata = {
-  title: { default: "App", template: "%s | App" },
-  description: "Next.js 16 Boilerplate",
+  title: { default: 'App', template: '%s | App' },
+  description: 'Next.js 16 Boilerplate',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
@@ -909,16 +902,16 @@ export default function RootLayout({ children }) {
 ### `src/app/page.js` — Root Redirect
 
 ```jsx
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 export default async function RootPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (session) {
-    redirect("/home");
+    redirect('/home');
   }
-  redirect("/login");
+  redirect('/login');
 }
 ```
 
@@ -950,8 +943,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "**",
+        protocol: 'https',
+        hostname: '**',
       },
     ],
   },
@@ -1040,6 +1033,7 @@ Component
 ```
 
 This strict layering means:
+
 - Components never call `fetch()` directly
 - Raw API functions are reusable outside React (e.g. in server actions)
 - Query keys are centralised in key factories — no string duplication
@@ -1073,6 +1067,7 @@ sequenceDiagram
 ## Implementation Steps (for Code Mode)
 
 ### Phase 1 — Foundation Setup
+
 1. Install all dependencies via pnpm
 2. Initialize shadcn/ui (`pnpm dlx shadcn@latest init`)
 3. Set up `components.json`
@@ -1081,6 +1076,7 @@ sequenceDiagram
 6. Create `.env.example` and `.env.local`
 
 ### Phase 2 — Database & Auth
+
 7. Create `prisma/schema.prisma` with Better Auth models
 8. Run `pnpm prisma generate` and `pnpm prisma migrate dev`
 9. Create `src/lib/prisma.js` singleton
@@ -1089,6 +1085,7 @@ sequenceDiagram
 12. Create `src/app/api/auth/[...all]/route.js`
 
 ### Phase 3 — State Management
+
 13. Create `src/store/index.js` Redux store
 14. Create `src/store/slices/uiSlice.js`
 15. Create `src/store/slices/userSlice.js`
@@ -1098,6 +1095,7 @@ sequenceDiagram
 19. Create `src/providers/index.jsx`
 
 ### Phase 4 — Constants & Config
+
 20. Create `src/constants/routes.js` (ROUTES, PUBLIC_ROUTES, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT)
 21. Create `src/constants/messages.js` (AUTH_MESSAGES, FORM_MESSAGES, GENERAL_MESSAGES)
 22. Create `src/constants/app.js` (APP_NAME, PAGINATION, SESSION, THEME)
@@ -1106,6 +1104,7 @@ sequenceDiagram
 25. Create `src/config/query.config.js` (TanStack Query defaults)
 
 ### Phase 5 — Utilities, Hooks & Types
+
 26. Create `src/lib/utils.js` with `cn()` helper
 27. Create `src/lib/helpers.js` (formatDate, truncate, capitalize, getInitials, sleep, safeJsonParse)
 28. Create `src/lib/api.js` reusable fetch wrapper
@@ -1119,6 +1118,7 @@ sequenceDiagram
 36. Create `src/services/queries/user.queries.js` (TanStack Query hooks + key factory)
 
 ### Phase 6 — UI Components
+
 37. Add shadcn/ui components: `button`, `card`, `input`, `label`, `form`, `toast`
 38. Create `src/components/layout/Navbar.jsx`
 39. Create `src/components/layout/Footer.jsx`
@@ -1127,6 +1127,7 @@ sequenceDiagram
 42. Create `src/components/auth/RegisterForm.jsx` (uses ROUTES + FORM_MESSAGES constants)
 
 ### Phase 7 — Pages & Layouts
+
 43. Update `src/app/layout.js` root layout with Providers
 44. Update `src/app/page.js` root redirect (uses ROUTES constants)
 45. Create `src/app/(auth)/layout.js` auth layout
@@ -1137,6 +1138,7 @@ sequenceDiagram
 50. Create `src/app/not-found.js` (uses GENERAL_MESSAGES constants)
 
 ### Phase 8 — Middleware & Final Config
+
 51. Create `src/middleware.js` route protection (uses ROUTES constants)
 52. Update `src/app/globals.css` with shadcn CSS variables
 53. Final review and README update
@@ -1145,24 +1147,24 @@ sequenceDiagram
 
 ## Key Best Practices Applied
 
-| Practice | Implementation |
-|---|---|
-| Route Groups | `(auth)` and `(main)` groups for layout separation |
-| Server Components by default | Pages are RSC; only interactive parts use `"use client"` |
-| Prisma singleton | Prevents connection pool exhaustion in dev |
-| Better Auth cookie-based sessions | Secure, httpOnly cookies via middleware |
-| Zod schemas co-located | `src/validations/` for reusable schemas |
-| Path aliases | `@/*` maps to `src/*` for clean imports |
-| Redux for client state only | TanStack Query handles all server/async state |
-| shadcn/ui non-tsx | JavaScript project uses `.jsx` not `.tsx` |
-| Environment variable prefix | `NEXT_PUBLIC_` only for browser-safe vars |
-| No magic strings | All routes, messages, limits in `src/constants/` |
-| Environment-based config | All env-dependent values in `src/config/` files |
-| Config consumed by lib | `auth.js` uses `authConfig`, `query-client.js` uses `queryConfig` |
-| Single HTTP client | `lib/api.js` wraps all fetch calls — no raw `fetch()` in components |
-| Service layer separation | `services/api/` = plain functions, `services/queries/` = React hooks |
-| Query key factories | `userKeys.me()` pattern prevents typos and enables targeted invalidation |
-| JSDoc types | `src/types/index.js` provides IDE autocomplete without TypeScript |
-| Reusable Zod fields | `common.schema.js` exports `emailSchema`, `passwordSchema` etc. for composition |
-| Toast abstraction | `useToast()` hook wraps shadcn toast with success/error/info helpers |
-| Pure helpers separated | `helpers.js` for data/string/date utils, `utils.js` only for `cn()` |
+| Practice                          | Implementation                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------- |
+| Route Groups                      | `(auth)` and `(main)` groups for layout separation                              |
+| Server Components by default      | Pages are RSC; only interactive parts use `"use client"`                        |
+| Prisma singleton                  | Prevents connection pool exhaustion in dev                                      |
+| Better Auth cookie-based sessions | Secure, httpOnly cookies via middleware                                         |
+| Zod schemas co-located            | `src/validations/` for reusable schemas                                         |
+| Path aliases                      | `@/*` maps to `src/*` for clean imports                                         |
+| Redux for client state only       | TanStack Query handles all server/async state                                   |
+| shadcn/ui non-tsx                 | JavaScript project uses `.jsx` not `.tsx`                                       |
+| Environment variable prefix       | `NEXT_PUBLIC_` only for browser-safe vars                                       |
+| No magic strings                  | All routes, messages, limits in `src/constants/`                                |
+| Environment-based config          | All env-dependent values in `src/config/` files                                 |
+| Config consumed by lib            | `auth.js` uses `authConfig`, `query-client.js` uses `queryConfig`               |
+| Single HTTP client                | `lib/api.js` wraps all fetch calls — no raw `fetch()` in components             |
+| Service layer separation          | `services/api/` = plain functions, `services/queries/` = React hooks            |
+| Query key factories               | `userKeys.me()` pattern prevents typos and enables targeted invalidation        |
+| JSDoc types                       | `src/types/index.js` provides IDE autocomplete without TypeScript               |
+| Reusable Zod fields               | `common.schema.js` exports `emailSchema`, `passwordSchema` etc. for composition |
+| Toast abstraction                 | `useToast()` hook wraps shadcn toast with success/error/info helpers            |
+| Pure helpers separated            | `helpers.js` for data/string/date utils, `utils.js` only for `cn()`             |

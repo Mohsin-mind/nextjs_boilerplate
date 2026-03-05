@@ -2,16 +2,16 @@
 
 export const ROUTES = {
   // Public
-  ROOT: "/",
-  LOGIN: "/login",
-  REGISTER: "/register",
+  ROOT: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
 
   // Protected
-  HOME: "/home",
-  DASHBOARD: "/dashboard",
+  HOME: '/home',
+  DASHBOARD: '/dashboard',
 
   // API
-  AUTH_API: "/api/auth",
+  AUTH_API: '/api/auth',
 };
 
 // Routes that do NOT require authentication
