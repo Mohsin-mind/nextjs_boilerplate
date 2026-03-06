@@ -4,6 +4,9 @@ import { useSession, signIn, signOut, signUp } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { AUTH_MESSAGES } from '@/constants/messages';
+import { checkUserExists } from '@/services/api/auth.api';
+import { isInvalidCredentialsError, mapLoginError } from '@/lib/auth-error';
+import { isSuccess } from '@/lib/api-envelope';
 
 /**
  * Auth state hook — wraps Better Auth client with app-specific helpers.
@@ -24,9 +27,13 @@ export function useAuth() {
   async function login({ email, password }) {
     const result = await signIn.email({ email, password });
     if (result.error) {
-      return {
-        error: result.error.message || result?.error?.statusText || AUTH_MESSAGES.LOGIN_ERROR,
-      };
+      let userExists = null;
+      if (isInvalidCredentialsError(result.error)) {
+        // Only do user-existence lookup for invalid-credentials cases.
+        const userCheck = await checkUserExists(email);
+        userExists = isSuccess(userCheck) ? userCheck.data?.exists : null;
+      }
+      return { error: mapLoginError(result.error, { userExists }) };
     }
     router.push(ROUTES.HOME);
     return {};

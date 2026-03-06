@@ -32,7 +32,7 @@ src/
 │   └── common/           # LoadingSpinner, etc.
 ├── config/               # Environment-based config objects
 ├── constants/            # Routes, messages, app constants
-├── hooks/                # useAuth, useMediaQuery, useToast
+├── hooks/                # useAuth, useMediaQuery
 ├── lib/                  # Singletons: prisma, auth, api, utils, helpers
 ├── providers/            # Redux + TanStack Query providers
 ├── services/
@@ -41,7 +41,7 @@ src/
 ├── store/                # Redux store + slices
 ├── types/                # JSDoc type definitions
 ├── validations/          # Zod schemas
-└── middleware.js         # Route protection
+└── proxy.js              # Route protection
 ```
 
 ## Getting Started

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getCurrentUser, updateUserProfile } from '@/services/api/user.api';
+import { isSuccess, toApiError } from '@/lib/api-envelope';
 
 // Query key factory — centralised, prevents typos and enables targeted invalidation
 export const userKeys = {
@@ -9,12 +10,18 @@ export const userKeys = {
 
 /**
  * Hook to fetch the current user's profile.
- * @returns {import("@tanstack/react-query").UseQueryResult<import("@/types").User>}
+ * Returns response envelope: { success, message, data, meta }.
+ * Throws on unsuccessful envelopes so TanStack `error` state works consistently.
+ * @returns {import("@tanstack/react-query").UseQueryResult<{ success: boolean, message: string, data: import('@/types').User | null, meta: any }>}
  */
 export function useCurrentUser() {
   return useQuery({
     queryKey: userKeys.me(),
-    queryFn: getCurrentUser,
+    queryFn: async () => {
+      const response = await getCurrentUser();
+      if (!isSuccess(response)) throw toApiError(response);
+      return response;
+    },
   });
 }
 
@@ -27,7 +34,11 @@ export function useUpdateUserProfile() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateUserProfile,
+    mutationFn: async (payload) => {
+      const response = await updateUserProfile(payload);
+      if (!isSuccess(response)) throw toApiError(response);
+      return response;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.me() });
     },

@@ -8,5 +8,6 @@ export const auth = betterAuth({
     provider: 'postgresql',
   }),
   baseURL: process.env.NEXT_PUBLIC_APP_URL, // Used for email links, callbacks, etc.
+  secret: process.env.BETTER_AUTH_SECRET,
   ...authConfig,
 });

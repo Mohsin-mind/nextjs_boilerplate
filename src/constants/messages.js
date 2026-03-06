@@ -3,6 +3,7 @@
 export const AUTH_MESSAGES = {
   LOGIN_SUCCESS: 'Welcome back!',
   LOGIN_ERROR: 'Invalid email or password.',
+  USER_NOT_FOUND: 'No account found with this email.',
   REGISTER_SUCCESS: 'Account created successfully.',
   REGISTER_ERROR: 'Failed to create account. Please try again.',
   LOGOUT_SUCCESS: 'You have been logged out.',
