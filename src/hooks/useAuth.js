@@ -24,7 +24,9 @@ export function useAuth() {
   async function login({ email, password }) {
     const result = await signIn.email({ email, password });
     if (result.error) {
-      return { error: result.error.message || AUTH_MESSAGES.LOGIN_ERROR };
+      return {
+        error: result.error.message || result?.error?.statusText || AUTH_MESSAGES.LOGIN_ERROR,
+      };
     }
     router.push(ROUTES.HOME);
     return {};
