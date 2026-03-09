@@ -10,9 +10,10 @@ export const userKeys = {
 
 /**
  * Hook to fetch the current user's profile.
- * Returns response envelope: { success, message, data, meta }.
+ * Returns response envelope: { success, data } on success.
+ * Throws API Error ({ status, code, validationErrors }) on failure envelopes.
  * Throws on unsuccessful envelopes so TanStack `error` state works consistently.
- * @returns {import("@tanstack/react-query").UseQueryResult<{ success: boolean, message: string, data: import('@/types').User | null, meta: any }>}
+ * @returns {import("@tanstack/react-query").UseQueryResult<any>}
  */
 export function useCurrentUser() {
   return useQuery({

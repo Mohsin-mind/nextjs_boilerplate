@@ -11,7 +11,7 @@ export const AUTH_MESSAGES = {
 };
 
 export const FORM_MESSAGES = {
-  REQUIRED: 'This field is required.',
+  REQUIRED: '{{field}} is required.',
   INVALID_EMAIL: 'Please enter a valid email address.',
   PASSWORD_MIN: 'Password must be at least 8 characters.',
   PASSWORDS_MISMATCH: 'Passwords do not match.',

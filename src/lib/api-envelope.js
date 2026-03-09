@@ -6,15 +6,12 @@
 /**
  * Check if API response is successful.
  * @param {any} response - The response object from API
- * @returns {boolean} - True if success is true/undefined and data exists
+ * @returns {boolean} - True only when response.success is explicitly true
  */
 export function isSuccess(response) {
   if (!response) return false;
   if (typeof response !== 'object') return false;
-  // success can be true, or undefined (for backward compatibility treat undefined as success if data exists)
-  return (
-    response.success === true || (response.success === undefined && response.data !== undefined)
-  );
+  return response.success === true;
 }
 
 /**
@@ -38,14 +35,13 @@ export function getData(response) {
 /**
  * Get error message from response.
  * @param {any} response
- * @param {string} [fallback]
  * @returns {string}
  */
-export function getErrorMessage(response, fallback = 'An error occurred') {
+export function getErrorMessage(response) {
   if (isError(response)) {
-    return response.message || fallback;
+    return response?.error?.message || '';
   }
-  return fallback;
+  return '';
 }
 
 /**
@@ -61,13 +57,13 @@ export function getMeta(response) {
  * Build a throwable Error from an API envelope response.
  * Useful when you want TanStack Query's error state to work with envelope responses.
  * @param {any} response
- * @param {string} [fallback]
  * @returns {Error}
  */
-export function toApiError(response, fallback = 'An error occurred') {
-  const err = new Error(getErrorMessage(response, fallback));
-  err.status = response?.meta?.status;
-  err.code = response?.meta?.code;
+export function toApiError(response) {
+  const err = new Error(getErrorMessage(response));
+  err.status = response?.error?.status;
+  err.code = response?.error?.code;
+  err.validationErrors = response?.error?.validationErrors ?? null;
   err.response = response;
   return err;
 }

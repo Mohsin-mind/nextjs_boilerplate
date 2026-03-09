@@ -2,8 +2,8 @@ import { api } from '@/lib/api';
 
 /**
  * Fetch the current authenticated user's profile.
- * Returns full response { success, message, data, meta }
- * @returns {Promise<{ success: boolean, message: string, data: any, meta: any }>}
+ * Returns full response envelope (success or error).
+ * @returns {Promise<any>}
  */
 export async function getCurrentUser() {
   return api.get('/api/users/me');
@@ -11,9 +11,9 @@ export async function getCurrentUser() {
 
 /**
  * Update the current user's profile.
- * Returns full response { success, message, data, meta }
+ * Returns full response envelope (success or error).
  * @param {Partial<import('@/types').User>} data
- * @returns {Promise<{ success: boolean, message: string, data: any, meta: any }>}
+ * @returns {Promise<any>}
  */
 export async function updateUserProfile(data) {
   return api.patch('/api/users/me', data);

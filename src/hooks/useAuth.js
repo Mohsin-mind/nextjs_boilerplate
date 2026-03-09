@@ -31,9 +31,11 @@ export function useAuth() {
       if (isInvalidCredentialsError(result.error)) {
         // Only do user-existence lookup for invalid-credentials cases.
         const userCheck = await checkUserExists(email);
-        userExists = isSuccess(userCheck) ? userCheck.data?.exists : null;
+        userExists = isSuccess(userCheck) ? (userCheck.data?.exists ?? null) : null;
       }
-      return { error: mapLoginError(result.error, { userExists }) };
+      return {
+        error: mapLoginError(result.error, { userExists }),
+      };
     }
     router.push(ROUTES.HOME);
     return {};
@@ -53,7 +55,9 @@ export function useAuth() {
       password,
     });
     if (result.error) {
-      return { error: result.error.message || AUTH_MESSAGES.REGISTER_ERROR };
+      return {
+        error: result.error.message || AUTH_MESSAGES.REGISTER_ERROR,
+      };
     }
     router.push(ROUTES.HOME);
     return {};

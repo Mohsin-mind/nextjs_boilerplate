@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { emailSchema, passwordSchema, nameSchema } from './common.schema';
+import { FORM_MESSAGES } from '@/constants/messages';
 
 export const loginSchema = z.object({
   email: emailSchema,
@@ -12,9 +13,11 @@ export const registerSchema = z
     lastName: nameSchema,
     email: emailSchema,
     password: passwordSchema,
-    confirmPassword: z.string(),
+    confirmPassword: z
+      .string()
+      .min(1, FORM_MESSAGES.REQUIRED.replace('{{field}}', 'Confirm password')),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: FORM_MESSAGES.PASSWORDS_MISMATCH,
     path: ['confirmPassword'],
   });

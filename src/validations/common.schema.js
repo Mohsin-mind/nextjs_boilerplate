@@ -4,6 +4,7 @@ import { PAGINATION } from '@/constants/app';
 // Reusable field schemas — compose these into larger schemas to avoid duplication
 
 export const emailSchema = z.string().email('Please enter a valid email address');
+export const normalizedEmailSchema = emailSchema.transform((value) => value.trim().toLowerCase());
 
 export const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
 

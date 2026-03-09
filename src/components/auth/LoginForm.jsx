@@ -3,7 +3,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useState } from 'react';
 import { loginSchema } from '@/validations/auth.schema';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -18,10 +17,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { ROUTES } from '@/constants/routes';
+import { toastError } from '@/lib/toast';
 
 export function LoginForm() {
   const { login } = useAuth();
-  const [serverError, setServerError] = useState('');
 
   const {
     register,
@@ -32,10 +31,9 @@ export function LoginForm() {
   });
 
   async function onSubmit(data) {
-    setServerError('');
     const result = await login(data);
     if (result.error) {
-      setServerError(result.error);
+      toastError(result.error);
     }
   }
 
@@ -48,9 +46,6 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
-          {/* Server error */}
-          {serverError && <p className="text-sm text-destructive">{serverError}</p>}
-
           {/* Email */}
           <div className="space-y-1">
             <Label htmlFor="email">Email</Label>
