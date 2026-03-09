@@ -1,4 +1,9 @@
 import { SESSION } from '@/constants/app';
+import { oneTap } from 'better-auth/plugins';
+
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const hasGoogleOAuth = Boolean(googleClientId && googleClientSecret);
 
 // Centralised auth config — consumed by Better Auth server (src/lib/auth.js)
 export const authConfig = {
@@ -16,11 +21,14 @@ export const authConfig = {
       lastName: { type: 'string', required: false },
     },
   },
-  // Uncomment to add OAuth providers:
-  // socialProviders: {
-  //   google: {
-  //     clientId: process.env.GOOGLE_CLIENT_ID,
-  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  //   },
-  // },
+  socialProviders: hasGoogleOAuth
+    ? {
+        google: {
+          clientId: googleClientId,
+          clientSecret: googleClientSecret,
+          redirectURI: `${process.env.NEXT_PUBLIC_APP_URL}/home`,
+        },
+      }
+    : undefined,
+  plugins: hasGoogleOAuth ? [oneTap()] : [],
 };

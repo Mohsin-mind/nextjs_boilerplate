@@ -64,7 +64,6 @@ Edit `.env.local` with your values:
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 BETTER_AUTH_SECRET=your-secret-key-min-32-chars
-BETTER_AUTH_URL=http://localhost:3000
 ```
 
 ### 3. Set up the database

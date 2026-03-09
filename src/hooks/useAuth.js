@@ -1,6 +1,7 @@
 'use client';
 
-import { useSession, signIn, signOut, signUp } from '@/lib/auth-client';
+import { useCallback } from 'react';
+import { useSession, signIn, signOut, signUp, oneTap } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { AUTH_MESSAGES } from '@/constants/messages';
@@ -42,6 +43,38 @@ export function useAuth() {
   }
 
   /**
+   * Sign in/up with Google OAuth.
+   * @returns {Promise<{ error?: string }>}
+   */
+  const loginWithGoogle = useCallback(async () => {
+    const result = await signIn.social({
+      provider: 'google',
+      callbackURL: ROUTES.HOME,
+    });
+    if (result?.error) {
+      return { error: result.error.message || AUTH_MESSAGES.LOGIN_ERROR };
+    }
+    return {};
+  }, []);
+
+  /**
+   * Trigger Google One Tap prompt (popup flow).
+   * Safe no-op when one-tap plugin is not configured.
+   */
+  const startGoogleOneTap = useCallback(async () => {
+    if (typeof oneTap !== 'function') return;
+    try {
+      await oneTap({
+        callbackURL: ROUTES.HOME,
+        context: 'signin',
+        uxMode: 'popup',
+      });
+    } catch {
+      // Ignore one-tap prompt failures and fall back to normal auth UI.
+    }
+  }, []);
+
+  /**
    * Register a new account with email and password.
    * @param {{ firstName: string, lastName: string, email: string, password: string }} data
    * @returns {Promise<{ error?: string }>}
@@ -77,6 +110,8 @@ export function useAuth() {
     isLoading,
     isAuthenticated,
     login,
+    loginWithGoogle,
+    startGoogleOneTap,
     register,
     logout,
   };

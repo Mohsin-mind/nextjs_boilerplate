@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { loginSchema } from '@/validations/auth.schema';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -20,7 +21,7 @@ import { ROUTES } from '@/constants/routes';
 import { toastError } from '@/lib/toast';
 
 export function LoginForm() {
-  const { login } = useAuth();
+  const { login, loginWithGoogle, startGoogleOneTap } = useAuth();
 
   const {
     register,
@@ -36,6 +37,17 @@ export function LoginForm() {
       toastError(result.error);
     }
   }
+
+  async function onGoogleSignIn() {
+    const result = await loginWithGoogle();
+    if (result.error) {
+      toastError(result.error);
+    }
+  }
+
+  useEffect(() => {
+    startGoogleOneTap();
+  }, [startGoogleOneTap]);
 
   return (
     <Card className="w-full max-w-sm">
@@ -76,6 +88,10 @@ export function LoginForm() {
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3">
+          <Button type="button" variant="outline" className="w-full" onClick={onGoogleSignIn}>
+            Continue with Google
+          </Button>
+          <div className="w-full text-center text-xs text-muted-foreground">or</div>
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? 'Signing in...' : 'Sign in'}
           </Button>
